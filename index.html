@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小书记520快乐呀</title>
+    <style>
+        /* 基础样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            overflow: hidden;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #fbc2eb, #a6c1ee);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 1000px;
+        }
+        
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        /* 主容器 */
+        .container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        
+        /* 爱心样式 */
+        .heart {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background-color: #ff4d6d;
+            transform: rotate(45deg);
+            animation: float 6s ease-in-out infinite;
+            filter: drop-shadow(0 0 5px rgba(255, 77, 109, 0.7));
+            z-index: 1;
+        }
+        
+        .heart:before, .heart:after {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background-color: inherit;
+            border-radius: 50%;
+        }
+        
+        .heart:before {
+            top: -15px;
+            left: 0;
+        }
+        
+        .heart:after {
+            top: 0;
+            left: -15px;
+        }
+        
+        /* 爱心动画 */
+        @keyframes float {
+            0%, 100% {
+                transform: rotate(45deg) translateY(0) scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: rotate(45deg) translateY(-50px) scale(1.2);
+                opacity: 0.8;
+            }
+        }
+        
+        /* 消息卡片 */
+        .card {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            height: 400px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            transition: all 0.5s ease;
+            animation: cardFloat 4s ease-in-out infinite;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        @keyframes cardFloat {
+            0%, 100% { transform: translate(-50%, -50%) rotateX(5deg) rotateY(5deg); }
+            50% { transform: translate(-50%, -55%) rotateX(-5deg) rotateY(-5deg); }
+        }
+        
+        .card:hover {
+            transform: translate(-50%, -50%) scale(1.05);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .card h1 {
+            font-size: 5rem;
+            color: white;
+            margin-bottom: 20px;
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(45deg, #ff4d6d, #ff758f);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: textGlow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes textGlow {
+            from { text-shadow: 0 0 5px #ff4d6d, 0 0 10px #ff4d6d; }
+            to { text-shadow: 0 0 10px #ff4d6d, 0 0 20px #ff4d6d, 0 0 30px #ff758f; }
+        }
+        
+        .card p {
+            font-size: 1.5rem;
+            color: white;
+            margin-bottom: 30px;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* 按钮样式 */
+        .btn {
+            background: linear-gradient(45deg, #ff4d6d, #ff758f);
+            border: none;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 77, 109, 0.4);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 77, 109, 0.6);
+        }
+        
+        .btn:active {
+            transform: translateY(1px);
+        }
+        
+        .btn:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #ff758f, #ff4d6d);
+            transition: all 0.4s ease;
+            z-index: -1;
+        }
+        
+        .btn:hover:before {
+            left: 0;
+        }
+        
+        /* 烟花效果 */
+        .firework {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            box-shadow: 0 0 10px 5px rgba(255, 255, 255, 0.8);
+            animation: explode 1s ease-out forwards;
+            opacity: 0;
+            z-index: 5;
+        }
+        
+        @keyframes explode {
+            0% { transform: scale(0); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: scale(20); opacity: 0; }
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .card {
+                width: 250px;
+                height: 350px;
+            }
+            
+            .card h1 {
+                font-size: 3.5rem;
+            }
+            
+            .card p {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h1>小书记</h1>
+            <p>520快乐呀</p>
+            <button class="btn" id="loveBtn">点击有惊喜</button>
+        </div>
+    </div>
+
+    <script>
+        // 创建随机爱心
+        const container = document.querySelector('.container');
+        const colors = ['#ff4d6d', '#ff758f', '#ff8fa3', '#ffb3c1', '#ffccd5'];
+        
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            
+            // 随机大小
+            const size = Math.random() * 20 + 15;
+            heart.style.width = `${size}px`;
+            heart.style.height = `${size}px`;
+            
+            // 随机颜色
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            heart.style.backgroundColor = color;
+            
+            // 随机位置
+            heart.style.left = `${Math.random() * 100}%`;
+            heart.style.top = `${Math.random() * 100}%`;
+            
+            // 随机动画延迟和持续时间
+            heart.style.animationDelay = `${Math.random() * 5}s`;
+            heart.style.animationDuration = `${Math.random() * 3 + 3}s`;
+            
+            container.appendChild(heart);
+            
+            // 8秒后移除爱心
+            setTimeout(() => {
+                heart.remove();
+            }, 8000);
+        }
+        
+        // 初始创建爱心
+        for (let i = 0; i < 30; i++) {
+            setTimeout(createHeart, i * 300);
+        }
+        
+        // 持续创建爱心
+        setInterval(createHeart, 500);
+        
+        // 点击按钮创建烟花效果
+        const loveBtn = document.getElementById('loveBtn');
+        loveBtn.addEventListener('click', function() {
+            // 创建多个烟花
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    createFirework(
+                        Math.random() * window.innerWidth,
+                        Math.random() * window.innerHeight,
+                        colors[Math.floor(Math.random() * colors.length)]
+                    );
+                }, i * 100);
+            }
+            
+            // 放大卡片动画
+            const card = document.querySelector('.card');
+            card.style.animation = 'none';
+            setTimeout(() => {
+                card.style.animation = 'cardFloat 4s ease-in-out infinite';
+            }, 10);
+            
+            card.style.transform = 'translate(-50%, -50%) scale(1.1)';
+            setTimeout(() => {
+                card.style.transform = 'translate(-50%, -50%) scale(1)';
+            }, 500);
+        });
+        
+        // 创建烟花函数
+        function createFirework(x, y, color) {
+            const firework = document.createElement('div');
+            firework.className = 'firework';
+            firework.style.left = `${x}px`;
+            firework.style.top = `${y}px`;
+            firework.style.boxShadow = `0 0 10px 5px ${color}`;
+            container.appendChild(firework);
+            
+            // 动画结束后移除
+            setTimeout(() => {
+                firework.remove();
+            }, 1000);
+        }
+        
+        // 点击屏幕任意位置创建爱心
+        container.addEventListener('click', function(e) {
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.className = 'heart';
+                    const size = Math.random() * 20 + 15;
+                    heart.style.width = `${size}px`;
+                    heart.style.height = `${size}px`;
+                    const color = colors[Math.floor(Math.random() * colors.length)];
+                    heart.style.backgroundColor = color;
+                    heart.style.left = `${e.clientX}px`;
+                    heart.style.top = `${e.clientY}px`;
+                    container.appendChild(heart);
+                    
+                    setTimeout(() => {
+                        heart.remove();
+                    }, 8000);
+                }, i * 100);
+            }
+        });
+        
+        // 鼠标移动时创建跟随效果
+        let mouseX = 0, mouseY = 0;
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+        
+        // 创建跟随的小爱心
+        setInterval(() => {
+            const trail = document.createElement('div');
+            trail.className = 'heart';
+            trail.style.width = '10px';
+            trail.style.height = '10px';
+            trail.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            trail.style.left = `${mouseX}px`;
+            trail.style.top = `${mouseY}px`;
+            trail.style.opacity = '0.6';
+            trail.style.animation = 'none';
+            trail.style.transform = 'rotate(45deg)';
+            container.appendChild(trail);
+            
+            // 淡出动画
+            let opacity = 0.6;
+            const fadeInterval = setInterval(() => {
+                opacity -= 0.02;
+                trail.style.opacity = opacity;
+                if (opacity <= 0) {
+                    clearInterval(fadeInterval);
+                    trail.remove();
+                }
+            }, 30);
+        }, 100);
+    </script>
+</body>
+</html>
